@@ -182,10 +182,18 @@ EndFunc
 Func PushToSBArray($arrayString)
      If $sbArrayItr < $oArrayLen Then
           $sbMBID[$sbArrayItr]               = $arrayString[1]
-          $sbSCPrice[$sbArrayItr]          = $arrayString[8]
-          $sbSTime[$sbArrayItr]               = $arrayString[11]
-          $sbETime[$sbArrayItr]               = $arrayString[12]
-          $sbStatus[$sbArrayItr]               = $arrayString[14]
+          $sbSTime[$sbArrayItr]               = $arrayString[12] ;从原来11列到现在12列
+          $sbETime[$sbArrayItr]               = $arrayString[13] ;从原来12列到现在13列
+          $sbStatus[$sbArrayItr]               = $arrayString[15] ;从原来14列到现在15列
+		  
+		  ; SC点原来是第8列表示，现在由8、9共同，8为类型，9为数值
+		  If $arrayString[10] = 7000 Then
+			$sbSCPrice[$sbArrayItr]          = $arrayString[11]
+		Else
+			$sbSCPrice[$sbArrayItr]          = 0
+		EndIf
+		  
+			; CP点原来是第9、10列表示，更新为10、11列
           If $arrayString[9] = 10 Then
                $sbCPPrice[$sbArrayItr]          = $arrayString[10]
           Else
